@@ -83,18 +83,18 @@ Before running this project, ensure you have the following installed:
     Create a `.env` file in the root directory and add the following variables:
 
     ```env
-    PORT=3000
+    PORT=your_port
     
     # Database Configuration
     DB_USER=your_postgres_user
     DB_PASSWORD=your_postgres_password
     DB_HOST=localhost
-    DB_PORT=5432
-    DB_NAME=auth_db
+    DB_PORT=your_postgres_port
+    DB_NAME=your_database_name
     
     # Security Secrets
     JWT_SECRET=your_super_secret_jwt_key
-    SALT_ROUNDS=10
+    SALT_ROUNDS=your_salt_rounds
     ```
 
 5.  **Run the Application:**
