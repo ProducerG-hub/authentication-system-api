@@ -9,7 +9,13 @@ module.exports.registerUser = async (req, res) => {
   if(!name || !email || !password) {
     return  res.status(400).json({
         success: false,
-        message: 'Name, email, and password are required'
+        message: 'All fields are required'
+    });
+  }
+  if(password.length < 6) {
+    return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters long'
     });
   }
   const client = await pool.connect();
@@ -57,7 +63,7 @@ module.exports.loginUser = async (req, res) => {
   if(!email || !password) {
     return res.status(400).json({ 
         success: false,
-        message: 'Email and password are required' 
+        message: 'All fields are required' 
     });
   }
 
@@ -110,10 +116,11 @@ module.exports.update_User = async (req, res) => {
   if(!name || !email) {
     return res.status(400).json({ 
         success: false,
-        message: 'Name and email are required' 
+        message: 'All fields are required' 
     });
   }
   try {
+    await pool.query('BEGIN');
     const query = `UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING id, name, email`;
     const values = [name, email, id]; 
     const result = await pool.query(query, values);
@@ -130,7 +137,9 @@ module.exports.update_User = async (req, res) => {
         message: 'User updated successfully', 
         user 
     }); 
+    await pool.query('COMMIT');
   } catch (error) {
+    await pool.query('ROLLBACK');
     console.error('Error updating user:', error);
     res.status(500).json({
         success: false,
@@ -143,6 +152,7 @@ module.exports.update_User = async (req, res) => {
 module.exports.delete_User = async (req, res) => {
   const { id } = req.params; 
   try {
+    await pool.query('BEGIN');
     const query = `DELETE FROM users WHERE id = $1 RETURNING id`;
     const values = [id]; 
     const result = await pool.query(query, values);
@@ -157,7 +167,9 @@ module.exports.delete_User = async (req, res) => {
         success: true,
         message: 'User deleted successfully' 
     }); 
+    await pool.query('COMMIT');
   } catch (error) {
+    await pool.query('ROLLBACK');
     console.error('Error deleting user:', error);
     res.status(500).json({
         success: false,

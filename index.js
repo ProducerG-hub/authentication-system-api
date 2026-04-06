@@ -16,7 +16,7 @@ app.use('/api/auth', authRoutes);
 app.get('/', (req, res) => {
   res.send(` Welcome to User Authentication API which is built using Nodejs, Expressjs, and PostgreSQL.
         This API allows you to register, login, update, delete, and find users in the PostgreSQL database.
-        Deveoloper: Mlue Technologies`);
+        Deveoloper:Gwamaka Mwakabuta - Mlue Technology`);
 });
 
 // Handle 404 - route not found
