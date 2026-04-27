@@ -11,9 +11,10 @@ It is designed to be a solid foundation for any application requiring user authe
 -   **Profile Management**: Update user details.
 -   **User Deletion**: Remove user accounts.
 -   **User Search**: Find specific user details.
--   **Security**: Uses `bcrypt` for password hashing and `jsonwebtoken` (JWT) for secure transmission also checking if a user has logged in recently or not before proceeding with other actions that require the user to be authenticated.
--   **Role-Based Access Control**: Admin users can manage other users.
+-   **Security**: Uses `bcrypt` for password hashing and `jsonwebtoken` (JWT) for secure transmission. Checks if a user is authenticated before allowing access to protected routes.
+-   **Role-Based Access Control**: Admin users can manage other users (via `roles` table, referenced by `role_id` in `users`).
 -   **Active User Management**: Only active users can log in.
+-   **Screenshots**: Visual documentation of key features and flows, available in the `screenshots/` directory.
 
 ## Tech Stack
 
@@ -161,16 +162,36 @@ The base URL for all authentication routes is: `http://localhost:3000/api/auth`
 
 ```
 ├── controller/
-│   └── logics.js       # Business logic for auth operations
+│   └── logics.js         # Business logic for auth operations
 ├── database/
-│   └── connect.js      # Database connection configuration
+│   └── connect.js        # Database connection configuration
+├── middleware/
+│   └── auth.js           # Authentication and role-based access middleware
 ├── routes/
-│   └── urls.js         # API Route definitions
-├── index.js            # Entry point of the application
-├── .env                # Environment variables (not included in repo)
-├── package.json        # Dependencies and scripts
-└── README.md           # Project documentation
+│   └── urls.js           # API Route definitions
+├── screenshots/          # Screenshots of the application (see below)
+│   ├── access-control.png
+│   ├── home-page.png
+│   ├── register-user.png
+│   ├── user-login.png
+│   └── user-login (Bad Credintials).png
+├── index.js              # Entry point of the application
+├── .env                  # Environment variables (not included in repo)
+├── package.json          # Dependencies and scripts
+└── README.md             # Project documentation
 ```
+
+## Screenshots
+
+The `screenshots/` directory contains visual documentation of the application's main features and flows:
+
+- **home-page.png**: Landing page of the API.
+- **register-user.png**: User registration process.
+- **user-login.png**: Successful user login.
+- **user-login (Bad Credintials).png**: Failed login attempt (bad credentials).
+- **access-control.png**: Example of access control (admin vs. user permissions).
+
+You can use these images for documentation, presentations, or to quickly understand the system's UI and API responses.
 
 ## License
 
