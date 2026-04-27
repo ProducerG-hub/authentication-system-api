@@ -1,4 +1,4 @@
-# Authentication System
+# Authentication System API (Node.js + PostgreSQL + JWT)
 
 A robust and secure authentication system built with Node.js, Express, and PostgreSQL. This system handles user registration, login, updates, deletions, and user search functionality.
 
@@ -63,11 +63,6 @@ Before running this project, ensure you have the following installed:
     -- Insert default roles
     INSERT INTO roles (name) VALUES ('user'), ('admin');
 
-    -- Creating A foreign key for roles table in users table
-    ALTER TABLE users
-    ADD CONSTRAINT fk_role
-    FOREIGN KEY (role_id) REFERENCES roles(id);
-
     -- Create Users table with role_id as a foreign key to roles table
     CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -78,6 +73,12 @@ Before running this project, ensure you have the following installed:
         is_active BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
+
+    -- Creating A foreign key for roles table in users table
+    ALTER TABLE users
+    ADD CONSTRAINT fk_role
+    FOREIGN KEY (role_id) REFERENCES roles(id);
+
     ```
 
 4.  **Environment Configuration:**
@@ -180,6 +181,25 @@ The base URL for all authentication routes is: `http://localhost:3000/api/auth`
 ├── package.json          # Dependencies and scripts
 └── README.md             # Project documentation
 ```
+## Architecture Overview
+
+- Controller Layer → Handles business logic
+- Routes Layer → Defines API endpoints
+- Middleware → Authentication & authorization
+- Database Layer → PostgreSQL connection and queries
+- Screenshots → Visual documentation of features and flows
+- Environment Variables → Secure configuration management
+
+## Security Features
+
+- Password hashing using bcrypt
+- JWT-based authentication
+- Role-based authorization (admin/user)
+- Protection of private routes
+- Active user validation before login
+- Secure storage of sensitive information using environment variables
+- Input validation and error handling to prevent common vulnerabilities
+- Regular updates and maintenance to address security issues and ensure best practices are followed
 
 ## Screenshots
 
@@ -192,6 +212,22 @@ The `screenshots/` directory contains visual documentation of the application's 
 - **access-control.png**: Example of access control (admin vs. user permissions).
 
 You can use these images for documentation, presentations, or to quickly understand the system's UI and API responses.
+
+## Future Improvements
+
+- Refresh token implementation
+- Email verification system
+- Password reset functionality
+- Rate limiting for security
+- Logging and monitoring
+- Unit and integration tests
+- Dockerization for easier deployment
+- Frontend integration (e.g., React, Vue)
+- Support for social login (Google, Facebook, etc.)
+- Improved error handling and validation
+- API documentation (e.g., Swagger)
+- Role management interface for admins
+- Multi-factor authentication (MFA) support
 
 ## License
 
